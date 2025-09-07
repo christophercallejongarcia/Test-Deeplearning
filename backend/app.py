@@ -6,7 +6,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
 from fastapi.middleware.trustedhost import TrustedHostMiddleware
 from pydantic import BaseModel
-from typing import List, Optional
+from typing import List, Optional, Dict, Any
 import os
 
 from config import config
@@ -43,13 +43,25 @@ class QueryRequest(BaseModel):
 class QueryResponse(BaseModel):
     """Response model for course queries"""
     answer: str
-    sources: List[str]
+    sources: List[Dict[str, Any]]
     session_id: str
+
+class CourseInfo(BaseModel):
+    """Individual course information"""
+    title: str
+    instructor: str
+    lesson_count: int
+    course_link: Optional[str] = None
 
 class CourseStats(BaseModel):
     """Response model for course statistics"""
     total_courses: int
     course_titles: List[str]
+
+class DetailedCourseStats(BaseModel):
+    """Response model for detailed course information"""
+    total_courses: int
+    courses: List[CourseInfo]
 
 # API Endpoints
 
@@ -81,6 +93,18 @@ async def get_course_stats():
         return CourseStats(
             total_courses=analytics["total_courses"],
             course_titles=analytics["course_titles"]
+        )
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
+@app.get("/api/courses/detailed", response_model=DetailedCourseStats)
+async def get_detailed_course_stats():
+    """Get detailed course information including instructors and lesson counts"""
+    try:
+        detailed_analytics = rag_system.get_detailed_course_analytics()
+        return DetailedCourseStats(
+            total_courses=detailed_analytics["total_courses"],
+            courses=detailed_analytics["courses"]
         )
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))

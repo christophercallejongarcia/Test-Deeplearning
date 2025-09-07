@@ -4,7 +4,7 @@ from document_processor import DocumentProcessor
 from vector_store import VectorStore
 from ai_generator import AIGenerator
 from session_manager import SessionManager
-from search_tools import ToolManager, CourseSearchTool
+from search_tools import ToolManager, CourseSearchTool, CourseOutlineTool
 from models import Course, Lesson, CourseChunk
 
 class RAGSystem:
@@ -22,7 +22,9 @@ class RAGSystem:
         # Initialize search tools
         self.tool_manager = ToolManager()
         self.search_tool = CourseSearchTool(self.vector_store)
+        self.outline_tool = CourseOutlineTool(self.vector_store)
         self.tool_manager.register_tool(self.search_tool)
+        self.tool_manager.register_tool(self.outline_tool)
     
     def add_course_document(self, file_path: str) -> Tuple[Course, int]:
         """
@@ -144,4 +146,23 @@ class RAGSystem:
         return {
             "total_courses": self.vector_store.get_course_count(),
             "course_titles": self.vector_store.get_existing_course_titles()
+        }
+    
+    def get_detailed_course_analytics(self) -> Dict:
+        """Get detailed analytics including instructor and lesson information"""
+        metadata_list = self.vector_store.get_all_courses_metadata()
+        
+        courses = []
+        for metadata in metadata_list:
+            course_info = {
+                "title": metadata.get("title", "Unknown Course"),
+                "instructor": metadata.get("instructor", "Unknown Instructor"),
+                "lesson_count": metadata.get("lesson_count", 0),
+                "course_link": metadata.get("course_link", None)
+            }
+            courses.append(course_info)
+        
+        return {
+            "total_courses": len(courses),
+            "courses": courses
         }

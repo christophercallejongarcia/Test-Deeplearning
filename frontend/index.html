@@ -7,31 +7,71 @@
     <meta http-equiv="Pragma" content="no-cache">
     <meta http-equiv="Expires" content="0">
     <title>Course Materials Assistant</title>
-    <link rel="stylesheet" href="style.css?v=9">
+    <link rel="stylesheet" href="style.css?v=20250906">
 </head>
 <body>
     <div class="container">
         <header>
-            <h1>Course Materials Assistant</h1>
-            <p class="subtitle">Ask questions about courses, instructors, and content</p>
+            <div class="header-content">
+                <div class="header-text">
+                    <h1>Course Materials Assistant</h1>
+                    <p class="subtitle">Ask questions about courses, instructors, and content</p>
+                </div>
+                <div class="theme-controls">
+                    <button 
+                        id="theme-toggle" 
+                        class="theme-toggle" 
+                        aria-label="Toggle dark mode"
+                        type="button"
+                    >
+                        <span class="toggle-icon sun-icon" aria-hidden="true">☀️</span>
+                        <span class="toggle-icon moon-icon" aria-hidden="true">🌙</span>
+                    </button>
+                    <div class="theme-dropdown" id="theme-dropdown">
+                        <button class="theme-dropdown-trigger" id="theme-dropdown-trigger" aria-label="Theme options">
+                            <span>⚙️</span>
+                        </button>
+                        <div class="theme-dropdown-menu" id="theme-dropdown-menu">
+                            <div class="theme-option" data-theme="light">
+                                <span class="theme-icon">☀️</span>
+                                <span class="theme-name">Light</span>
+                            </div>
+                            <div class="theme-option" data-theme="dark">
+                                <span class="theme-icon">🌙</span>
+                                <span class="theme-name">Dark</span>
+                            </div>
+                            <div class="theme-option" data-theme="auto">
+                                <span class="theme-icon">🖥️</span>
+                                <span class="theme-name">Auto</span>
+                            </div>
+                            <div class="theme-option" data-theme="high-contrast">
+                                <span class="theme-icon">🔲</span>
+                                <span class="theme-name">High Contrast</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </header>
 
         <div class="main-content">
             <!-- Left Sidebar -->
             <aside class="sidebar">
+                <!-- New Chat Button -->
+                <div class="sidebar-section">
+                    <button class="new-chat-button" id="newChatButton" aria-label="Start new chat conversation">+ NEW CHAT</button>
+                </div>
+                
                 <!-- Course Stats -->
                 <div class="sidebar-section">
-                    <details class="stats-collapsible">
-                        <summary class="stats-header">Courses</summary>
+                    <details class="stats-collapsible" open>
+                        <summary class="stats-header">Courses (<span id="totalCourses">-</span>)</summary>
                         <div class="course-stats" id="courseStats">
-                            <div class="stat-item">
-                                <span class="stat-label">Number of courses:</span>
-                                <span class="stat-value" id="totalCourses">-</span>
-                            </div>
-                            <div class="stat-item">
-                                <div class="course-titles" id="courseTitles">
-                                    <span class="loading">Loading...</span>
-                                </div>
+                            <button class="quick-action-btn" id="showAllOutlinesBtn">
+                                📋 Show All Course Outlines
+                            </button>
+                            <div class="course-cards" id="courseCards">
+                                <span class="loading">Loading courses...</span>
                             </div>
                         </div>
                     </details>
@@ -76,6 +116,6 @@
 
 
     <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
-    <script src="script.js?v=9"></script>
+    <script src="script.js?v=20250906"></script>
 </body>
 </html>
