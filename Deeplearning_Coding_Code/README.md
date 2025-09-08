@@ -33,7 +33,7 @@ cd Deeplearning_Coding_Code
 npm install
 
 # Python Komponenten
-cd ../starting-ragchatbot-codebase
+cd starting-ragchatbot-codebase
 pip install -r requirements.txt
 ```
 
