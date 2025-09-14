@@ -1,0 +1,1614 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Hausverwaltung — Intelligente Automatisierung</title>
+    <meta name="description" content="Digitalisierung und Automatisierung für Hausverwaltungen. Sparen Sie 15-20 Stunden pro Woche durch KI-gestützte Mieterkorrespondenz, automatisierte Nebenkostenabrechnung und intelligente Prozessoptimierung.">
+    <meta name="keywords" content="Hausverwaltung Digitalisierung, Immobilienverwaltung Automatisierung, Mieterkorrespondenz KI, Nebenkostenabrechnung Software, Property Management Automation">
+    
+    <!-- Preconnect for performance -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    
+    <!-- Main JavaScript -->
+    <script src="js/main.js"></script>
+    
+    <style>
+        /* ===== CUSTOM STYLES ===== */
+        :root {
+            --coral-50: #fef2f2;
+            --coral-500: #ff6b47;
+            --coral-600: #e55a3b;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        /* Coral Color Classes */
+        .text-coral-500 { color: var(--coral-500); }
+        .bg-coral-50 { background-color: var(--coral-50); }
+        .bg-coral-500 { background-color: var(--coral-500); }
+        .bg-coral-600 { background-color: var(--coral-600); }
+        .hover\:text-coral-500:hover { color: var(--coral-500); }
+        .hover\:bg-coral-600:hover { background-color: var(--coral-600); }
+        .ring-coral-200 { --tw-ring-color: #fecaca; }
+        .ring-coral-300 { --tw-ring-color: #fca5a5; }
+        .hover\:ring-coral-300:hover { --tw-ring-color: #fca5a5; }
+
+        /* Scroll Animations */
+        .scroll-element {
+            opacity: 0;
+            transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .fade-in-up { transform: translateY(40px); }
+        .fade-in-left { transform: translateX(-40px); }
+        .fade-in-right { transform: translateX(40px); }
+        .stagger-1 { transition-delay: 0.1s; }
+        .stagger-2 { transition-delay: 0.2s; }
+        .stagger-3 { transition-delay: 0.3s; }
+        .animate-in {
+            opacity: 1;
+            transform: translateY(0) translateX(0);
+        }
+
+        /* Component Styles */
+        .nav-backdrop {
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+        }
+
+        .hero-text {
+            font-size: clamp(2.5rem, 8vw, 6rem);
+            line-height: 0.9;
+            letter-spacing: -0.02em;
+        }
+
+        @media (min-width: 1024px) {
+            .hero-text {
+                font-size: clamp(4rem, 10vw, 8rem);
+            }
+        }
+
+        /* Custom Gradients */
+        .gradient-coral {
+            background: linear-gradient(135deg, var(--coral-50) 0%, #ffffff 100%);
+        }
+
+        .card-shadow {
+            box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
+        }
+
+        /* Animation for process indicators */
+        .process-indicator {
+            animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+
+        /* Efficiency Slider Styles */
+        .automation-efficiency-slider {
+            user-select: none;
+        }
+
+        .slider-track {
+            position: relative;
+        }
+
+        .slider-fill {
+            transition: width 0.3s ease;
+        }
+
+        .slider-thumb {
+            transition: left 0.3s ease;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+        }
+
+        .slider-thumb:hover {
+            transform: translate(-50%, -50%) scale(1.1);
+        }
+
+        .step-indicator {
+            transition: all 0.3s ease;
+        }
+
+        .step-indicator.active .step-dot {
+            background-color: var(--coral-500);
+            transform: scale(1.3);
+            box-shadow: 0 2px 8px rgba(255, 107, 71, 0.3);
+        }
+
+        .step-indicator:hover .step-dot {
+            transform: scale(1.1);
+        }
+
+        .step-indicator.active {
+            color: var(--coral-500);
+        }
+
+        .step-indicator.active .text-gray-600 {
+            color: var(--coral-500);
+        }
+
+        /* Hide default range input styling completely */
+        #efficiency-slider {
+            -webkit-appearance: none;
+            appearance: none;
+            background: transparent;
+            outline: none;
+        }
+
+        #efficiency-slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 24px;
+            height: 24px;
+            background: transparent;
+            cursor: grab;
+        }
+
+        #efficiency-slider::-webkit-slider-thumb:active {
+            cursor: grabbing;
+        }
+
+        #efficiency-slider::-moz-range-thumb {
+            width: 24px;
+            height: 24px;
+            background: transparent;
+            border: none;
+            cursor: grab;
+        }
+
+        #efficiency-slider::-moz-range-thumb:active {
+            cursor: grabbing;
+        }
+
+        #efficiency-slider::-webkit-slider-track {
+            background: transparent;
+        }
+
+        #efficiency-slider::-moz-range-track {
+            background: transparent;
+        }
+
+        /* Responsive breakpoints enhancement */
+        @media (max-width: 1024px) {
+            .hero-grid-mobile {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+        }
+
+        /* Accessibility improvements */
+        .focus-visible:focus {
+            outline: none;
+            box-shadow: 0 0 0 2px var(--coral-500);
+            border-radius: 0.375rem;
+        }
+
+        /* Print styles */
+        @media print {
+            .no-print { display: none !important; }
+        }
+
+        /* Featured Card Styling - Premium Extravagant Design */
+        .featured-card {
+            transform: scale(1.08);
+            position: relative;
+            background: linear-gradient(145deg, #111827 0%, #1f2937 50%, #111827 100%);
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            overflow: visible !important;
+        }
+        
+        .featured-card::before {
+            content: '';
+            position: absolute;
+            top: -2px;
+            left: -2px;
+            right: -2px;
+            bottom: -2px;
+            background: linear-gradient(45deg, #f59e0b, #f97316, #ef4444, #8b5cf6, #f59e0b);
+            background-size: 300% 300%;
+            border-radius: 1.75rem;
+            z-index: -1;
+            animation: gradient-shift 4s ease infinite;
+            opacity: 0.8;
+        }
+        
+        .featured-card:hover {
+            transform: scale(1.12);
+            box-shadow: 0 30px 60px rgba(251, 191, 36, 0.3), 
+                        0 0 80px rgba(251, 146, 60, 0.2),
+                        0 0 0 1px rgba(255, 255, 255, 0.1);
+        }
+        
+        .featured-card:hover::before {
+            opacity: 1;
+            animation-duration: 2s;
+        }
+        
+        /* Premium Animations */
+        @keyframes gradient-shift {
+            0% { background-position: 0% 50%; }
+            25% { background-position: 100% 50%; }
+            50% { background-position: 100% 100%; }
+            75% { background-position: 0% 100%; }
+            100% { background-position: 0% 50%; }
+        }
+        
+        @keyframes shimmer {
+            0% { transform: translateX(-100%) rotate(20deg); opacity: 0; }
+            50% { opacity: 1; }
+            100% { transform: translateX(300%) rotate(20deg); opacity: 0; }
+        }
+        
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            33% { transform: translateY(-2px) rotate(1deg); }
+            66% { transform: translateY(1px) rotate(-1deg); }
+        }
+        
+        @keyframes pulse-glow {
+            0%, 100% { box-shadow: 0 0 20px rgba(251, 191, 36, 0.4); }
+            50% { box-shadow: 0 0 40px rgba(251, 191, 36, 0.7); }
+        }
+        
+        /* Floating Badge Animation */
+        .floating-badge {
+            animation: float 3s ease-in-out infinite;
+        }
+        
+        /* Shimmer Effect for the Card */
+        .featured-card::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.08), transparent);
+            animation: shimmer 4s infinite;
+            pointer-events: none;
+            border-radius: 1.5rem;
+        }
+
+        /* Secondary Cards - Subtle styling */
+        .secondary-card {
+            opacity: 0.95;
+            transform: scale(0.98);
+            transition: all 0.3s ease;
+        }
+        
+        .secondary-card:hover {
+            opacity: 1;
+            transform: scale(1.02);
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 1024px) {
+            .featured-card {
+                transform: scale(1.04);
+            }
+            .secondary-card {
+                transform: scale(0.99);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .featured-card,
+            .secondary-card {
+                transform: scale(1) !important;
+            }
+        }
+    </style>
+</head>
+
+<body class="antialiased bg-white text-gray-900">
+    <!-- Background Animation -->
+    <div class="fixed top-0 w-full h-screen -z-10">
+        <div class="absolute top-0 left-0 w-full h-full -z-10">
+            <iframe src="https://my.spline.design/radialpattern-hkyfBWXPTPO4g8csZKdL866B/" frameborder="0" width="100%" height="100%"></iframe>
+        </div>
+    </div>
+
+    <!-- Top Navigation -->
+    <header class="fixed top-0 left-0 right-0 z-50 bg-white/80 nav-backdrop ring-1 ring-gray-200 scroll-element fade-in-up">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+                <div class="flex items-center">
+                    <span class="text-xl font-semibold text-gray-900 tracking-tight">AI Hausverwaltung</span>
+                </div>
+                
+                <nav class="hidden md:flex items-center space-x-8">
+                    <a href="#leistungen" class="text-sm font-medium text-gray-600 hover:text-coral-500 transition-colors">Leistungen</a>
+                    <a href="#prozesse" class="text-sm font-medium text-gray-600 hover:text-coral-500 transition-colors">Prozesse</a>
+                    <a href="#technologie" class="text-sm font-medium text-gray-600 hover:text-coral-500 transition-colors">Technologie</a>
+                    <a href="#referenzen" class="text-sm font-medium text-gray-600 hover:text-coral-500 transition-colors">Referenzen</a>
+                    <a href="#services" class="text-sm font-medium text-gray-600 hover:text-coral-500 transition-colors">Services</a>
+                    <a href="#preise" class="text-sm font-medium text-gray-600 hover:text-coral-500 transition-colors">Preise</a>
+                    <a href="#kontakt" class="text-sm font-medium text-gray-600 hover:text-coral-500 transition-colors">Kontakt</a>
+                </nav>
+
+                <div class="flex items-center gap-2">
+                    <button class="md:hidden p-2 rounded-lg hover:bg-gray-100 transition-colors" id="mobile-menu-toggle">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-5 h-5">
+                            <path d="M4 12h16"></path>
+                            <path d="M4 18h16"></path>
+                            <path d="M4 6h16"></path>
+                        </svg>
+                    </button>
+                    <button class="hidden md:flex p-2 rounded-lg hover:bg-gray-100 transition-colors">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-4 h-4">
+                            <path d="M13.832 16.568a1 1 0 0 0 1.213-.303l.355-.465A2 2 0 0 1 17 15h3a2 2 0 0 1 2 2v3a2 2 0 0 1-2 2A18 18 0 0 1 2 4a2 2 0 0 1 2-2h3a2 2 0 0 1 2 2v3a2 2 0 0 1-.8 1.6l-.468.351a1 1 0 0 0-.292 1.233 14 14 0 0 0 6.392 6.384"></path>
+                        </svg>
+                    </button>
+                    <button class="hidden md:flex p-2 rounded-lg hover:bg-gray-100 transition-colors relative">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-4 h-4">
+                            <rect width="16" height="20" x="4" y="2" rx="2"></rect>
+                            <line x1="8" x2="16" y1="6" y2="6"></line>
+                            <line x1="16" x2="16" y1="14" y2="18"></line>
+                            <path d="m16 10 4 4-4 4"></path>
+                        </svg>
+                        <span class="absolute -top-1 -right-1 w-4 h-4 bg-coral-500 text-white text-xs rounded-full flex items-center justify-center">€</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="lg:pt-32 lg:pb-20 pt-24 pb-16">
+        <div class="max-w-7xl sm:px-6 lg:px-8 mr-auto ml-auto pr-4 pl-4">
+            <!-- Main Headlines -->
+            <div class="text-center space-y-4 mb-16 scroll-element fade-in-up">
+                <h1 class="hero-text font-light tracking-tighter leading-none">
+                    <span class="flex items-center justify-center gap-4 flex-wrap">
+                        INTELLIGENTE
+                        <span class="inline-flex bg-coral-50 rounded-full p-2">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-6 h-6 text-coral-500">
+                                <path d="M4 14a1 1 0 0 1-.78-1.63l9.9-10.2a.5.5 0 0 1 .86.46l-1.92 6.02A1 1 0 0 0 13 10h7a1 1 0 0 1 .78 1.63l-9.9 10.2a.5.5 0 0 1-.86-.46l1.92-6.02A1 1 0 0 0 11 14z"></path>
+                            </svg>
+                        </span>
+                        AUTOMATISIERUNG
+                    </span>
+                </h1>
+                <h1 class="hero-text font-light tracking-tighter leading-none">
+                    <span class="flex items-center justify-center gap-4 flex-wrap">
+                        FÜR
+                        <span class="inline-flex bg-coral-50 rounded-full p-2">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-6 h-6 text-coral-500">
+                                <path d="M15 21v-8a1 1 0 0 0-1-1h-4a1 1 0 0 0-1 1v8"></path>
+                                <path d="M3 10a2 2 0 0 1 .709-1.528l7-5.999a2 2 0 0 1 2.582 0l7 5.999A2 2 0 0 1 21 10v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+                            </svg>
+                        </span>
+                        HAUSVERWALTUNGEN
+                    </span>
+                </h1>
+            </div>
+
+            <!-- Hero Grid -->
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 lg:gap-8 hero-grid-mobile">
+                <!-- Left Card - Statistics -->
+                <div class="lg:col-span-1 scroll-element fade-in-left">
+                    <div class="lg:min-h-[520px] flex flex-col ring-1 ring-gray-200 bg-gradient-to-br from-gray-50 to-white rounded-3xl pt-6 pr-6 pb-6 pl-6 card-shadow">
+                        <div class="flex items-baseline gap-2">
+                            <span class="sm:text-6xl text-5xl font-light text-gray-900 tracking-tighter">15-20h</span>
+                            <span class="text-gray-600">pro Woche gespart</span>
+                        </div>
+                        <p class="text-gray-700 mt-3">Wir automatisieren repetitive Prozesse in der Hausverwaltung und schaffen Zeit für wichtige Aufgaben.</p>
+                        <p class="mt-4 italic text-gray-500">Automatisieren. Optimieren. Skalieren.</p>
+
+                        <div class="mt-6 overflow-hidden rounded-2xl ring-1 ring-gray-300">
+                            <div class="relative w-full h-44 sm:h-56 bg-gradient-to-br from-white to-gray-100">
+                                <!-- Subtle glow and vignette -->
+                                <div class="absolute inset-0 pointer-events-none" style="background: radial-gradient(1200px 300px at -10% -10%, rgba(0,0,0,0.08), transparent 60%), radial-gradient(600px 200px at 110% 0%, rgba(0,0,0,0.04), transparent 55%);"></div>
+
+                                <!-- Content - Process Automation Preview -->
+                                <div class="relative h-full w-full sm:p-5 flex flex-col pt-4 pr-4 pb-4 pl-4">
+                                    <!-- Header -->
+                                    <div class="flex items-center justify-between pb-3 sm:pb-4 border-b border-gray-200">
+                                        <div class="flex items-center gap-3">
+                                            <div class="h-9 w-9 sm:h-10 sm:w-10 rounded-full bg-coral-500 text-white flex items-center justify-center text-sm font-medium ring-1 ring-gray-300 shadow-sm">KI</div>
+                                            <div class="flex flex-col">
+                                                <span class="text-gray-900 text-sm sm:text-base font-medium">Automatisierung</span>
+                                                <span class="text-[11px] text-gray-500">Aktiv</span>
+                                            </div>
+                                        </div>
+                                        <span class="text-sm text-gray-600">Hausverwaltung</span>
+                                    </div>
+
+                                    <!-- Process Rows -->
+                                    <div class="mt-3 sm:mt-4 space-y-3 sm:space-y-3.5">
+                                        <!-- Row 1: Tenant Communication -->
+                                        <div class="flex items-center gap-3">
+                                            <div class="h-8 w-8 rounded-lg bg-green-100 ring-1 ring-green-300 flex items-center justify-center text-green-700">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-4.5 h-4.5">
+                                                    <rect width="20" height="16" x="2" y="4" rx="2"></rect>
+                                                    <path d="m22 7-10 5L2 7"></path>
+                                                </svg>
+                                            </div>
+                                            <div class="flex-1">
+                                                <div class="h-2.5 rounded-full bg-green-300 w-4/5"></div>
+                                                <div class="mt-2 h-2.5 w-2/5 rounded-full bg-gray-200"></div>
+                                            </div>
+                                            <div class="process-indicator w-2 h-2 bg-green-500 rounded-full"></div>
+                                        </div>
+
+                                        <!-- Row 2: Billing Automation -->
+                                        <div class="flex items-center gap-3">
+                                            <div class="h-8 w-8 rounded-lg bg-blue-100 ring-1 ring-blue-300 flex items-center justify-center text-blue-700">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-4.5 h-4.5">
+                                                    <path d="M4 2v20l2-1 2 1 2-1 2 1 2-1 2 1 2-1 2 1V2l-2 1-2-1-2 1-2-1-2 1-2-1-2 1Z"></path>
+                                                    <path d="M16 8h-6a2 2 0 1 0 0 4h4a2 2 0 1 1 0 4H8"></path>
+                                                    <path d="M12 17.5v-11"></path>
+                                                </svg>
+                                            </div>
+                                            <div class="flex-1">
+                                                <div class="h-2.5 rounded-full bg-blue-300 w-3/4"></div>
+                                                <div class="mt-2 h-2.5 w-3/5 rounded-full bg-gray-200"></div>
+                                            </div>
+                                            <div class="process-indicator w-2 h-2 bg-blue-500 rounded-full"></div>
+                                        </div>
+
+                                        <!-- Row 3: Document Management -->
+                                        <div class="flex items-center gap-3">
+                                            <div class="h-8 w-8 rounded-lg bg-purple-100 ring-1 ring-purple-300 flex items-center justify-center text-purple-700">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-4.5 h-4.5">
+                                                    <path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"></path>
+                                                    <path d="M14 2v4a2 2 0 0 0 2 2h4"></path>
+                                                    <path d="M10 9H8"></path>
+                                                    <path d="M16 13H8"></path>
+                                                    <path d="M16 17H8"></path>
+                                                </svg>
+                                            </div>
+                                            <div class="flex-1">
+                                                <div class="h-2.5 rounded-full bg-purple-300 w-5/6"></div>
+                                                <div class="mt-2 h-2.5 w-1/2 rounded-full bg-gray-200"></div>
+                                            </div>
+                                            <div class="process-indicator w-2 h-2 bg-purple-500 rounded-full"></div>
+                                        </div>
+                                    </div>
+
+                                    <!-- Footer progress -->
+                                    <div class="mt-auto">
+                                        <div class="mt-4 h-8 w-full rounded-xl bg-coral-100 ring-1 ring-coral-300 flex items-center justify-center">
+                                            <span class="text-xs font-medium text-coral-700">85% Automatisiert</span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Card outline for depth -->
+                                <div class="pointer-events-none absolute inset-0 rounded-2xl ring-1 ring-gray-300"></div>
+                            </div>
+                        </div>
+
+                        <div class="mt-5">
+                            <button class="inline-flex gap-2 hover:bg-black transition-colors ring-1 ring-gray-300 text-sm font-medium text-white bg-gray-900 rounded-full pt-2.5 pr-4 pb-2.5 pl-4 shadow-sm items-center focus-visible">
+                                Kostenlose Analyse
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-4 h-4">
+                                    <path d="M5 12h14"></path>
+                                    <path d="m12 5 7 7-7 7"></path>
+                                </svg>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Middle Column - Main CTA -->
+                <div class="lg:col-span-1 lg:min-h-[520px] flex flex-col scroll-element fade-in-up">
+                    <!-- Subtitle + CTA -->
+                    <div class="text-center space-y-6 mb-8">
+                        <p class="text-lg sm:text-xl text-gray-700">Wo Effizienz auf Innovation trifft. Wir transformieren Hausverwaltungen durch intelligente Automatisierung und KI-gestützte Prozessoptimierung.</p>
+                        
+                        <div class="flex flex-wrap gap-3 items-center justify-center">
+                            <button class="inline-flex gap-2 hover:bg-coral-600 transition-colors text-sm font-medium text-white bg-coral-500 rounded-full pt-2.5 pr-4 pb-2.5 pl-4 items-center focus-visible">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-4 h-4">
+                                    <path d="M4 14a1 1 0 0 1-.78-1.63l9.9-10.2a.5.5 0 0 1 .86.46l-1.92 6.02A1 1 0 0 0 13 10h7a1 1 0 0 1 .78 1.63l-9.9 10.2a.5.5 0 0 1-.86-.46l1.92-6.02A1 1 0 0 0 11 14z"></path>
+                                </svg>
+                                Jetzt Starten
+                            </button>
+                            <button class="inline-flex gap-2 ring-1 ring-black text-black hover:bg-gray-100 transition-colors text-sm font-medium bg-white rounded-full pt-2.5 pr-4 pb-2.5 pl-4 items-center focus-visible">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-4 h-4">
+                                    <path d="M13.832 16.568a1 1 0 0 0 1.213-.303l.355-.465A2 2 0 0 1 17 15h3a2 2 0 0 1 2 2v3a2 2 0 0 1-2 2A18 18 0 0 1 2 4a2 2 0 0 1 2-2h3a2 2 0 0 1 2 2v3a2 2 0 0 1-.8 1.6l-.468.351a1 1 0 0 0-.292 1.233 14 14 0 0 0 6.392 6.384"></path>
+                                </svg>
+                                Beratung Buchen
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Bottom Card - Expertise Showcase -->
+                    <div class="ring-1 ring-coral-200 text-white bg-gray-950 rounded-3xl mt-auto pt-6 pr-6 pb-6 pl-6 space-y-4 card-shadow">
+                        <div class="mb-4 space-y-6">
+                            <div class="relative h-40 sm:h-48">
+                                <!-- Service icons arranged in cards -->
+                                <div class="absolute -left-2 top-2 sm:-left-1 sm:top-0 w-28 h-24 sm:w-32 sm:h-28 ring-1 ring-gray-200 bg-gradient-to-br from-coral-100 to-coral-200 rounded-2xl pt-1 pr-1 pb-1 pl-1 shadow-xl rotate-[-12deg] flex items-center justify-center">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-coral-600">
+                                        <rect width="20" height="16" x="2" y="4" rx="2"></rect>
+                                        <path d="m22 7-10 5L2 7"></path>
+                                    </svg>
+                                </div>
+                                <div class="absolute -right-1 top-4 sm:right-0 sm:top-2 w-28 h-24 sm:w-32 sm:h-28 ring-1 ring-gray-200 bg-gradient-to-br from-blue-100 to-blue-200 rounded-2xl pt-1 pr-1 pb-1 pl-1 shadow-xl rotate-[12deg] flex items-center justify-center">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-blue-600">
+                                        <path d="M4 2v20l2-1 2 1 2-1 2 1 2-1 2 1 2-1 2 1V2l-2 1-2-1-2 1-2-1-2 1-2-1-2 1Z"></path>
+                                        <path d="M16 8h-6a2 2 0 1 0 0 4h4a2 2 0 1 1 0 4H8"></path>
+                                        <path d="M12 17.5v-11"></path>
+                                    </svg>
+                                </div>
+                                <div class="absolute left-2 bottom-0 w-28 h-24 sm:w-32 sm:h-28 ring-1 ring-gray-200 bg-gradient-to-br from-green-100 to-green-200 rounded-2xl pt-1 pr-1 pb-1 pl-1 shadow-xl rotate-[10deg] flex items-center justify-center">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-green-600">
+                                        <path d="M9 12l2 2 4-4"></path>
+                                        <circle cx="12" cy="12" r="9"></circle>
+                                    </svg>
+                                </div>
+                                <div class="absolute right-1 bottom-1 w-28 h-24 sm:w-32 sm:h-28 ring-1 ring-gray-200 bg-gradient-to-br from-purple-100 to-purple-200 rounded-2xl pt-1 pr-1 pb-1 pl-1 shadow-xl rotate-[-8deg] flex items-center justify-center">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-purple-600">
+                                        <path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"></path>
+                                        <path d="M14 2v4a2 2 0 0 0 2 2h4"></path>
+                                    </svg>
+                                </div>
+                                <!-- Center main card -->
+                                <div class="absolute inset-0 w-40 h-32 sm:w-48 sm:h-36 ring-1 ring-gray-200 z-10 bg-gradient-to-br from-orange-100 to-coral-100 rounded-2xl mt-auto mr-auto mb-auto ml-auto pt-1 pr-1 pb-1 pl-1 shadow-xl flex items-center justify-center">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-coral-600">
+                                        <path d="M4 14a1 1 0 0 1-.78-1.63l9.9-10.2a.5.5 0 0 1 .86.46l-1.92 6.02A1 1 0 0 0 13 10h7a1 1 0 0 1 .78 1.63l-9.9 10.2a.5.5 0 0 1-.86-.46l1.92-6.02A1 1 0 0 0 11 14z"></path>
+                                    </svg>
+                                </div>
+                            </div>
+                            <p class="text-gray-300 mt-4">
+                                <span class="sm:text-6xl text-5xl font-light text-gray-50 tracking-tighter">5+</span> Jahre Expertise
+                            </p>
+                        </div>
+
+                        <p class="text-sm text-gray-400">Unser erfahrenes Team kombiniert Immobilien-Know-how mit modernster KI-Technologie für optimale Ergebnisse.</p>
+                    </div>
+                </div>
+
+                <!-- Right Card - Services -->
+                <div class="lg:col-span-1 scroll-element fade-in-right">
+                    <div class="lg:min-h-[520px] flex flex-col ring-1 ring-gray-200 bg-gradient-to-br from-gray-50 to-white rounded-3xl pt-6 pr-6 pb-6 pl-6 card-shadow">
+                        <h3 class="text-lg font-semibold mb-2 text-gray-900">Automatisierungs-Services</h3>
+                        <p class="text-gray-700 mt-3 mb-8">Von der Idee bis zur Implementierung – wir liefern maßgeschneiderte Automatisierungslösungen für Ihre Hausverwaltung.</p>
+
+                        <div class="flex-1 relative">
+                            <div class="relative overflow-hidden rounded-2xl ring-1 ring-gray-200 bg-gradient-to-br from-white to-gray-50 h-full">
+                                <!-- Subtle background pattern -->
+                                <div class="absolute inset-0 pointer-events-none" style="background: radial-gradient(800px 400px at 50% 0%, rgba(17,24,39,0.03), transparent 70%);"></div>
+                                
+                                <!-- Main content -->
+                                <div class="relative h-full flex flex-col pt-4 pr-4 pb-4 pl-4">
+                                    <!-- Header -->
+                                    <div class="mb-0">
+                                        <div class="inline-flex items-center gap-3 mb-4">
+                                            <h4 class="text-2xl font-light tracking-tight text-gray-900">Wir Automatisieren</h4>
+                                        </div>
+                                    </div>
+                                    
+                                    <!-- Service cards in grid -->
+                                    <div class="grid grid-cols-2 gap-3 mb-6">
+                                        <div class="group relative overflow-hidden rounded-xl bg-gradient-to-br from-gray-100 to-gray-50 p-4 ring-1 ring-gray-200 hover:ring-gray-300 transition-all hover:scale-[1.02]">
+                                            <div class="flex gap-2 mb-2 items-center">
+                                                <span class="text-sm font-medium text-gray-900">Mieterkorrespondenz</span>
+                                            </div>
+                                            <div class="space-y-1">
+                                                <div class="h-1.5 rounded-full bg-coral-300 w-full"></div>
+                                                <div class="h-1.5 rounded-full bg-gray-200 w-2/3"></div>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="group relative overflow-hidden rounded-xl bg-gradient-to-br from-gray-100 to-gray-50 p-4 ring-1 ring-gray-200 hover:ring-gray-300 transition-all hover:scale-[1.02]">
+                                            <div class="flex items-center gap-2 mb-2">
+                                                <span class="text-sm font-medium text-gray-900">Nebenkostenabrechnung</span>
+                                            </div>
+                                            <div class="space-y-1">
+                                                <div class="h-1.5 rounded-full bg-blue-300 w-4/5"></div>
+                                                <div class="h-1.5 rounded-full bg-gray-200 w-full"></div>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="group relative overflow-hidden rounded-xl bg-gradient-to-br from-gray-100 to-gray-50 p-4 ring-1 ring-gray-200 hover:ring-gray-300 transition-all hover:scale-[1.02]">
+                                            <div class="flex items-center gap-2 mb-2">
+                                                <span class="text-sm font-medium text-gray-900">Wartungsplanung</span>
+                                            </div>
+                                            <div class="space-y-1">
+                                                <div class="h-1.5 rounded-full bg-green-300 w-3/4"></div>
+                                                <div class="h-1.5 rounded-full bg-gray-200 w-1/2"></div>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="group relative overflow-hidden rounded-xl bg-gradient-to-br from-gray-100 to-gray-50 p-4 ring-1 ring-gray-200 hover:ring-gray-300 transition-all hover:scale-[1.02]">
+                                            <div class="flex items-center gap-2 mb-2">
+                                                <span class="text-sm font-medium text-gray-900">Dokumentation</span>
+                                            </div>
+                                            <div class="space-y-1">
+                                                <div class="h-1.5 rounded-full bg-purple-300 w-5/6"></div>
+                                                <div class="h-1.5 rounded-full bg-gray-200 w-3/4"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    <!-- Bottom progress indicator -->
+                                    <div class="mt-auto">
+                                        <div class="flex items-center justify-between mb-3">
+                                            <span class="text-xs font-medium text-gray-600 uppercase tracking-wide">Automatisierung</span>
+                                            <span class="text-xs text-gray-500">92% Effizienzsteigerung</span>
+                                        </div>
+                                        <div class="flex items-center gap-3">
+                                            <div class="flex-1">
+                                                <p class="text-xs text-gray-600">KI-gestützte Prozessoptimierung läuft</p>
+                                            </div>
+                                            <button class="h-8 w-8 hover:bg-gray-700 flex transition-colors bg-gray-900 rounded-full items-center justify-center focus-visible">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-3.5 h-3.5 text-white">
+                                                    <path d="M7 7h10v10"></path>
+                                                    <path d="M7 17 17 7"></path>
+                                                </svg>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Services Overview Section -->
+    <section id="leistungen" class="sm:py-20 pt-16 pb-16 scroll-element fade-in-up">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="relative overflow-hidden rounded-3xl ring-1 ring-gray-200 bg-gradient-to-br from-gray-50 to-white sm:px-10 lg:px-14 lg:py-14 pt-10 pr-6 pb-10 pl-6">
+                <div class="flex items-end justify-between mb-8">
+                    <div>
+                        <p class="text-[11px] sm:text-xs tracking-widest text-gray-500 font-light uppercase mb-3">(01) Leistungen</p>
+                        <h2 class="text-3xl sm:text-5xl font-light tracking-tighter text-gray-900">Unsere Automatisierungs-Services</h2>
+                        <p class="mt-4 text-xl text-gray-600">Maßgeschneiderte Lösungen für effiziente Hausverwaltung</p>
+                    </div>
+                </div>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <div class="bg-gradient-to-br from-gray-50 to-white ring-1 ring-gray-200 rounded-3xl overflow-hidden group hover:ring-coral-300 transition-colors scroll-element fade-in-up stagger-1">
+                        <div class="aspect-video overflow-hidden">
+                            <div class="w-full h-full bg-gradient-to-br from-coral-100 to-coral-200 flex items-center justify-center group-hover:scale-105 transition-transform duration-500">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="text-coral-600">
+                                    <rect width="20" height="16" x="2" y="4" rx="2"></rect>
+                                    <path d="m22 7-10 5L2 7"></path>
+                                </svg>
+                            </div>
+                        </div>
+                        <div class="p-6">
+                            <h3 class="font-semibold mb-2 text-gray-900">Mieterkorrespondenz KI</h3>
+                            <p class="text-gray-600 text-sm">Automatisierte E-Mail-Bearbeitung spart 80% der Zeit bei Mieteranfragen und sorgt für konsistente, professionelle Kommunikation.</p>
+                            <div class="mt-4 flex justify-between items-center">
+                                <span class="text-coral-500 text-sm">80% Zeitersparnis</span>
+                                <button class="h-8 w-8 hover:bg-gray-700 flex transition-colors bg-gray-900 rounded-full items-center justify-center focus-visible">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-3.5 h-3.5 text-white">
+                                        <path d="M7 7h10v10"></path>
+                                        <path d="M7 17 17 7"></path>
+                                    </svg>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="bg-gradient-to-br from-gray-50 to-white ring-1 ring-gray-200 rounded-3xl overflow-hidden group hover:ring-coral-300 transition-colors scroll-element fade-in-up stagger-2">
+                        <div class="aspect-video overflow-hidden">
+                            <div class="w-full h-full bg-gradient-to-br from-blue-100 to-blue-200 flex items-center justify-center group-hover:scale-105 transition-transform duration-500">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="text-blue-600">
+                                    <path d="M4 2v20l2-1 2 1 2-1 2 1 2-1 2 1 2-1 2 1V2l-2 1-2-1-2 1-2-1-2 1-2-1-2 1Z"></path>
+                                    <path d="M16 8h-6a2 2 0 1 0 0 4h4a2 2 0 1 1 0 4H8"></path>
+                                    <path d="M12 17.5v-11"></path>
+                                </svg>
+                            </div>
+                        </div>
+                        <div class="p-6">
+                            <h3 class="font-semibold mb-2 text-gray-900">Nebenkostenabrechnung Digital</h3>
+                            <p class="text-gray-600 text-sm">Automatisierte Erstellung reduziert Fehler um 95% und Zeit um 60%. Präzise Berechnungen mit direkter Mieter-Integration.</p>
+                            <div class="mt-4 flex justify-between items-center">
+                                <span class="text-coral-500 text-sm">95% weniger Fehler</span>
+                                <button class="h-8 w-8 hover:bg-gray-700 flex transition-colors bg-gray-900 rounded-full items-center justify-center focus-visible">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-3.5 h-3.5 text-white">
+                                        <path d="M7 7h10v10"></path>
+                                        <path d="M7 17 17 7"></path>
+                                    </svg>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="bg-gradient-to-br from-gray-50 to-white ring-1 ring-gray-200 rounded-3xl overflow-hidden group hover:ring-coral-300 transition-colors scroll-element fade-in-up stagger-3">
+                        <div class="aspect-video overflow-hidden">
+                            <div class="w-full h-full bg-gradient-to-br from-green-100 to-green-200 flex items-center justify-center group-hover:scale-105 transition-transform duration-500">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="text-green-600">
+                                    <path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"></path>
+                                    <path d="M14 2v4a2 2 0 0 0 2 2h4"></path>
+                                    <path d="M10 9H8"></path>
+                                    <path d="M16 13H8"></path>
+                                    <path d="M16 17H8"></path>
+                                </svg>
+                            </div>
+                        </div>
+                        <div class="p-6">
+                            <h3 class="font-semibold mb-2 text-gray-900">Dokumenten-Management KI</h3>
+                            <p class="text-gray-600 text-sm">KI-gestützte Organisation und Archivierung für lückenlose Compliance und schnelle Dokumenten-Auffindung.</p>
+                            <div class="mt-4 flex justify-between items-center">
+                                <span class="text-coral-500 text-sm">100% Compliance</span>
+                                <button class="h-8 w-8 hover:bg-gray-700 flex transition-colors bg-gray-900 rounded-full items-center justify-center focus-visible">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-3.5 h-3.5 text-white">
+                                        <path d="M7 7h10v10"></path>
+                                        <path d="M7 17 17 7"></path>
+                                    </svg>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="text-center mt-12 scroll-element fade-in-up">
+                    <button class="inline-flex gap-2 hover:bg-black transition-colors ring-1 ring-gray-300 text-sm font-medium text-white bg-gray-900 rounded-full pt-2.5 pr-4 pb-2.5 pl-4 shadow-sm items-center focus-visible">
+                        Alle Services Ansehen
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-4 h-4">
+                            <path d="M5 12h14"></path>
+                            <path d="m12 5 7 7-7 7"></path>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Process Section -->
+    <section id="prozesse" class="py-16 sm:py-20 scroll-element fade-in-up">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="relative overflow-hidden rounded-3xl ring-1 ring-gray-200 bg-gradient-to-br from-gray-50 to-white sm:px-10 lg:px-14 lg:py-14 pt-10 pr-6 pb-10 pl-6">
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+                    <div class="scroll-element fade-in-left">
+                        <p class="text-[11px] sm:text-xs tracking-widest text-gray-500 font-light uppercase mb-3">(02) Prozesse</p>
+                        <h2 class="sm:text-5xl text-3xl font-light text-gray-900 tracking-tighter mb-6">Unser Automatisierungs-Prozess</h2>
+                        <p class="text-xl text-gray-600 mb-8">Wir glauben, dass erfolgreiche Automatisierung mit der Analyse Ihrer Prozesse beginnt und mit messbaren Effizienzsteigerungen endet.</p>
+                        
+                        <div class="space-y-6">
+                            <div class="flex items-start gap-4 scroll-element fade-in-up stagger-1">
+                                <div class="flex-shrink-0 w-8 h-8 rounded-full bg-coral-50 flex items-center justify-center">
+                                    <span class="text-coral-500 font-semibold text-sm">01</span>
+                                </div>
+                                <div>
+                                    <h3 class="font-semibold mb-2 text-gray-900">Analyse & Identifikation</h3>
+                                    <p class="text-gray-600">Wir analysieren Ihre aktuellen Prozesse und identifizieren Automatisierungspotenziale für maximale Effizienzsteigerung.</p>
+                                </div>
+                            </div>
+                            
+                            <div class="flex items-start gap-4 scroll-element fade-in-up stagger-2">
+                                <div class="flex-shrink-0 w-8 h-8 rounded-full bg-coral-50 flex items-center justify-center">
+                                    <span class="text-coral-500 font-semibold text-sm">02</span>
+                                </div>
+                                <div>
+                                    <h3 class="font-semibold mb-2 text-gray-900">KI-Entwicklung & Integration</h3>
+                                    <p class="text-gray-600">Unser Team entwickelt maßgeschneiderte KI-Lösungen und integriert sie nahtlos in Ihre bestehenden Systeme.</p>
+                                </div>
+                            </div>
+                            
+                            <div class="flex items-start gap-4 scroll-element fade-in-up stagger-3">
+                                <div class="flex-shrink-0 w-8 h-8 rounded-full bg-coral-50 flex items-center justify-center">
+                                    <span class="text-coral-500 font-semibold text-sm">03</span>
+                                </div>
+                                <div>
+                                    <h3 class="font-semibold mb-2 text-gray-900">Optimierung & Skalierung</h3>
+                                    <p class="text-gray-600">Kontinuierliche Optimierung und Skalierung der Automatisierung für langfristige Effizienzsteigerungen.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="relative scroll-element fade-in-right">
+                        <div class="aspect-square flex bg-cover ring-1 ring-gray-200 rounded-2xl pt-8 pr-8 pb-8 pl-8 items-end justify-start bg-gradient-to-br from-gray-100 to-gray-200">
+                            <div class="max-w-md text-left bg-white/90 backdrop-blur-sm rounded-2xl pt-6 pr-6 pb-6 pl-6 ring-1 ring-gray-200/50">
+                                <h3 class="text-2xl font-light tracking-tighter text-gray-900 mb-3">Automatisierungs-Exzellenz</h3>
+                                <p class="text-gray-700">Jeder Prozess wird zur Grundlage für Innovation und kontinuierliche Verbesserung in der Hausverwaltung.</p>
+                                <div class="mt-4 flex items-center gap-2">
+                                    <div class="w-3 h-3 bg-coral-500 rounded-full process-indicator"></div>
+                                    <span class="text-sm text-gray-600">Live-Optimierung aktiv</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ROI Calculator Section -->
+    <section id="roi-rechner" class="py-16 sm:py-20 scroll-element fade-in-up">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="relative overflow-hidden rounded-3xl ring-1 ring-gray-200 bg-gradient-to-br from-gray-50 to-white sm:px-10 lg:px-14 lg:py-14 pt-10 pr-6 pb-10 pl-6">
+                <div class="text-center mb-12">
+                    <p class="text-[11px] sm:text-xs tracking-widest text-gray-500 font-light uppercase mb-3">(03) Kostenrechner</p>
+                    <h2 class="text-3xl sm:text-5xl font-light tracking-tighter text-gray-900 mb-4">Ihr realistisches Einsparpotenzial</h2>
+                    <p class="text-xl text-gray-600">Wissenschaftlich fundierte Berechnung für Hausverwaltungen</p>
+                    <p class="text-sm text-gray-500 mt-2">Basierend auf der CRES-Verwalterentgeltstudie 2022 und aktuellen Branchendaten</p>
+                </div>
+
+                <div id="roi-calculator" class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
+                    <!-- ROI Calculator Form -->
+                    <div class="bg-white rounded-2xl p-8 ring-1 ring-gray-200 card-shadow">
+                        <h3 class="text-xl font-semibold mb-6 text-gray-900">Ihre Daten eingeben</h3>
+                        
+                        <div class="space-y-6">
+                            <div class="form-group">
+                                <label class="block text-sm font-medium text-gray-700 mb-2">Anzahl Mitarbeiter in der Verwaltung</label>
+                                <input type="number" id="employees" min="1" max="100" value="5" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-coral-500 focus:border-coral-500 transition-colors">
+                            </div>
+                            
+                            <div class="form-group">
+                                <label class="block text-sm font-medium text-gray-700 mb-2">
+                                    Administrative Stunden pro Woche (alle Mitarbeiter gesamt)
+                                    <div class="tooltip-container relative inline-block ml-1">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-gray-400 hover:text-gray-600 cursor-help">
+                                            <circle cx="12" cy="12" r="10"></circle>
+                                            <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path>
+                                            <path d="M12 17h.01"></path>
+                                        </svg>
+                                        <div class="tooltip absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 px-3 py-2 bg-gray-800 text-white text-sm rounded-lg opacity-0 pointer-events-none transition-opacity duration-300 w-64 z-50">
+                                            Nur repetitive/administrative Tätigkeiten: E-Mails, Abrechnungen, Korrespondenz, etc. Typisch: 10-20 Stunden pro Mitarbeiter pro Woche.
+                                        </div>
+                                    </div>
+                                </label>
+                                <input type="number" id="hours-per-week" min="1" max="200" placeholder="z.B. 60" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-coral-500 focus:border-coral-500 transition-colors">
+                                <p class="text-xs text-gray-500 mt-1">Nur administrative/repetitive Aufgaben (ca. 10-20h pro Mitarbeiter)</p>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label class="block text-sm font-medium text-gray-700 mb-2">Durchschnittlicher Stundenlohn (€)</label>
+                                <input type="number" id="hourly-rate" min="10" max="100" value="35" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-coral-500 focus:border-coral-500 transition-colors">
+                            </div>
+                            
+                            <div class="form-group">
+                                <label class="block text-sm font-medium text-gray-700 mb-4">Automatisierungsgrad</label>
+                                <div class="automation-efficiency-slider">
+                                    <!-- Slider Container -->
+                                    <div class="relative">
+                                        <!-- Step Indicators positioned above slider -->
+                                        <div class="flex justify-between mb-2 px-3">
+                                            <div class="step-indicator text-center cursor-pointer" data-value="25">
+                                                <div class="w-3 h-3 bg-gray-300 rounded-full mx-auto mb-1 step-dot transition-all duration-300"></div>
+                                                <div class="text-xs text-gray-600 font-medium">25%</div>
+                                                <div class="text-xs text-gray-500">Konservativ</div>
+                                                <div class="tooltip-container">
+                                                    <div class="automation-tooltip absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 px-4 py-3 bg-gray-800 text-white text-sm rounded-lg opacity-0 pointer-events-none transition-opacity duration-300 w-80 z-50">
+                                                        <strong>Digitale Grundausstattung</strong><br>
+                                                        E-Mail-Vorlagen, digitale Dokumentenverwaltung<br>
+                                                        <span class="text-green-300">Investment: €2.000-5.000</span><br>
+                                                        Für die meisten Verwaltungen sofort umsetzbar
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="step-indicator text-center cursor-pointer active" data-value="40">
+                                                <div class="w-3 h-3 bg-coral-500 rounded-full mx-auto mb-1 step-dot transition-all duration-300"></div>
+                                                <div class="text-xs text-coral-500 font-medium">40%</div>
+                                                <div class="text-xs text-coral-500">Moderat</div>
+                                                <div class="tooltip-container">
+                                                    <div class="automation-tooltip absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 px-4 py-3 bg-gray-800 text-white text-sm rounded-lg opacity-0 pointer-events-none transition-opacity duration-300 w-80 z-50">
+                                                        <strong>Intelligente Automatisierung</strong><br>
+                                                        KI-Korrespondenz, automatische Nebenkostenerstellung<br>
+                                                        <span class="text-yellow-300">Investment: €10.000-25.000</span><br>
+                                                        Erfordert 3-6 Monate Einarbeitung
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="step-indicator text-center cursor-pointer" data-value="50">
+                                                <div class="w-3 h-3 bg-gray-300 rounded-full mx-auto mb-1 step-dot transition-all duration-300"></div>
+                                                <div class="text-xs text-gray-600 font-medium">50%</div>
+                                                <div class="text-xs text-gray-500">Maximal</div>
+                                                <div class="tooltip-container">
+                                                    <div class="automation-tooltip absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 px-4 py-3 bg-gray-800 text-white text-sm rounded-lg opacity-0 pointer-events-none transition-opacity duration-300 w-80 z-50">
+                                                        <strong>Zukunftsorientierte Vollautomatisierung</strong><br>
+                                                        Predictive Maintenance, KI-gesteuerte Prozesse<br>
+                                                        <span class="text-red-300">Investment: €25.000+</span><br>
+                                                        Nur für größere Verwaltungen (1000+ Einheiten) wirtschaftlich
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        
+                                        <!-- Slider Track Container with same padding as step indicators -->
+                                        <div class="relative px-3">
+                                            <!-- Slider Track with inner container for precise alignment -->
+                                            <div class="slider-track w-full h-2 bg-gray-200 rounded-full relative">
+                                                <div class="slider-fill h-full bg-coral-500 rounded-full transition-all duration-300"></div>
+                                                <!-- Slider Thumb positioned on track -->
+                                                <div class="slider-thumb absolute top-1/2 transform -translate-y-1/2 -translate-x-1/2 w-5 h-5 bg-white rounded-full border-2 border-coral-500 shadow-lg transition-all duration-300 cursor-grab active:cursor-grabbing z-10"></div>
+                                            </div>
+                                            
+                                            <!-- Slider Input -->
+                                            <input 
+                                                type="range" 
+                                                id="efficiency-slider" 
+                                                min="25" 
+                                                max="50" 
+                                                step="12.5" 
+                                                value="40" 
+                                                class="absolute top-0 left-0 w-full h-full opacity-0 cursor-grab active:cursor-grabbing z-20"
+                                            />
+                                        </div>
+                                    </div>
+                                    
+                                </div>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label class="block text-sm font-medium text-gray-700 mb-2">Anzahl verwalteter Einheiten</label>
+                                <input type="number" id="properties" min="1" max="1000" value="100" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-coral-500 focus:border-coral-500 transition-colors">
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- ROI Results -->
+                    <div class="bg-gradient-to-br from-coral-50 to-white rounded-2xl p-8 ring-1 ring-coral-200 card-shadow">
+                        <h3 class="text-xl font-semibold mb-6 text-gray-900">Ihre Einsparungen</h3>
+                        
+                        <div class="space-y-6">
+                            <div class="bg-white rounded-xl p-6 ring-1 ring-coral-100">
+                                <div class="flex items-center justify-between">
+                                    <span class="text-gray-700 font-medium">Monatliche Einsparungen</span>
+                                    <span id="monthly-savings" class="text-2xl font-bold text-coral-600">€8.125</span>
+                                </div>
+                            </div>
+                            
+                            <div class="bg-white rounded-xl p-6 ring-1 ring-coral-100">
+                                <div class="flex items-center justify-between">
+                                    <span class="text-gray-700 font-medium">Jährliche Einsparungen</span>
+                                    <span id="yearly-savings" class="text-2xl font-bold text-coral-600">€97.500</span>
+                                </div>
+                            </div>
+                            
+                            <div class="bg-white rounded-xl p-6 ring-1 ring-coral-100">
+                                <div class="flex items-center justify-between">
+                                    <span class="text-gray-700 font-medium">Zeit pro Monat gespart</span>
+                                    <span id="time-recovered" class="text-2xl font-bold text-coral-600">75h</span>
+                                </div>
+                            </div>
+                            
+                            <div class="bg-coral-500 text-white rounded-xl p-6 text-center">
+                                <p class="text-sm mb-2">ROI nach 12 Monaten</p>
+                                <p id="roi-percentage" class="text-3xl font-bold">420%</p>
+                            </div>
+                            
+                            <div class="bg-white rounded-xl p-6 ring-1 ring-coral-100">
+                                <div class="flex items-center justify-between">
+                                    <span class="text-gray-700 font-medium">Amortisationsdauer</span>
+                                    <span id="payback-period" class="text-2xl font-bold text-coral-600">8M</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Trust Indicator -->
+                        <div class="vertrauen-indikator mt-6 mb-4">
+                            <div class="flex items-center justify-between mb-2">
+                                <span class="text-sm font-medium text-gray-700">Berechnungsvertrauen</span>
+                                <span class="vertrauen-grad text-sm font-semibold text-green-600">Hohe Verlässlichkeit</span>
+                            </div>
+                            <div class="vertrauen-bar bg-gray-200 h-2 rounded-full overflow-hidden">
+                                <div class="vertrauen-fill bg-green-500 h-full rounded-full transition-all duration-500" style="width: 85%"></div>
+                            </div>
+                            <p class="text-xs text-gray-500 mt-1">85% basierend auf CRES-Studie und Branchendaten</p>
+                        </div>
+
+                        <!-- Breakdown Button -->
+                        <button id="show-breakdown" class="w-full mb-4 inline-flex items-center justify-center gap-2 bg-gray-100 hover:bg-gray-200 text-gray-700 rounded-lg px-4 py-3 text-sm font-medium transition-colors border border-gray-300">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <circle cx="12" cy="12" r="10"></circle>
+                                <line x1="12" y1="16" x2="12" y2="12"></line>
+                                <line x1="12" y1="8" x2="12.01" y2="8"></line>
+                            </svg>
+                            Aufschlüsselung der Einsparungen anzeigen
+                        </button>
+
+                        <!-- Source Reference -->
+                        <div class="quellen-hinweis bg-blue-50 border border-blue-200 rounded-lg p-3 mb-4">
+                            <p class="text-xs text-blue-700">
+                                📊 Basiert auf CRES-Verwalterentgeltstudie 2022 und VDIV-Branchendaten
+                                <button class="text-blue-600 underline hover:no-underline ml-1" onclick="zeigeQuellen()">Quellen anzeigen</button>
+                            </p>
+                        </div>
+
+                        <div class="mt-8">
+                            <button class="w-full inline-flex items-center justify-center gap-2 bg-coral-500 hover:bg-coral-600 text-white rounded-full px-6 py-3 text-sm font-medium transition-colors focus-visible">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-4 h-4">
+                                    <path d="M13.832 16.568a1 1 0 0 0 1.213-.303l.355-.465A2 2 0 0 1 17 15h3a2 2 0 0 1 2 2v3a2 2 0 0 1-2 2A18 18 0 0 1 2 4a2 2 0 0 1 2-2h3a2 2 0 0 1 2 2v3a2 2 0 0 1-.8 1.6l-.468.351a1 1 0 0 0-.292 1.233 14 14 0 0 0 6.392 6.384"></path>
+                                </svg>
+                                Individuelle Automatisierungsstrategie besprechen
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Breakdown Modal -->
+    <div id="aufschlusselung-modal" class="fixed inset-0 bg-black bg-opacity-50 z-50 hidden flex items-center justify-center p-4">
+        <div class="bg-white rounded-xl max-w-2xl w-full max-h-[90vh] overflow-y-auto">
+            <div class="p-6">
+                <div class="flex items-center justify-between mb-6">
+                    <h3 class="text-xl font-semibold text-gray-900">Wie setzen sich Ihre Einsparungen zusammen?</h3>
+                    <button id="close-breakdown-modal" class="text-gray-400 hover:text-gray-600 transition-colors">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <line x1="18" y1="6" x2="6" y2="18"></line>
+                            <line x1="6" y1="6" x2="18" y2="18"></line>
+                        </svg>
+                    </button>
+                </div>
+
+                <div class="space-y-4" id="breakdown-content">
+                    <div class="einsparung-komponente flex items-center justify-between p-4 bg-gray-50 rounded-lg">
+                        <div>
+                            <span class="label font-medium text-gray-900">Direkte Lohnkosteneinsparungen:</span>
+                            <p class="text-sm text-gray-600 mt-1">Gesparte Stunden × Stundenlohn</p>
+                        </div>
+                        <div class="text-right">
+                            <span class="betrag text-lg font-semibold text-coral-600" id="breakdown-direct">€0</span>
+                            <span class="prozent text-sm text-gray-500 block" id="breakdown-direct-percent">(0%)</span>
+                        </div>
+                    </div>
+
+                    <div class="einsparung-komponente flex items-center justify-between p-4 bg-gray-50 rounded-lg">
+                        <div>
+                            <span class="label font-medium text-gray-900">Produktivitätssteigerung pro Einheit:</span>
+                            <p class="text-sm text-gray-600 mt-1">Basierend auf CRES-Daten: 0.584h/Einheit/Monat</p>
+                        </div>
+                        <div class="text-right">
+                            <span class="betrag text-lg font-semibold text-coral-600" id="breakdown-productivity">€0</span>
+                            <span class="prozent text-sm text-gray-500 block" id="breakdown-productivity-percent">(0%)</span>
+                        </div>
+                    </div>
+
+                    <div class="einsparung-komponente flex items-center justify-between p-4 bg-gray-50 rounded-lg">
+                        <div>
+                            <span class="label font-medium text-gray-900">Effizienzgewinne:</span>
+                            <p class="text-sm text-gray-600 mt-1">Fehlerreduktion + weniger Nacharbeit + Kommunikationseffizienz</p>
+                        </div>
+                        <div class="text-right">
+                            <span class="betrag text-lg font-semibold text-coral-600" id="breakdown-efficiency">€0</span>
+                            <span class="prozent text-sm text-gray-500 block" id="breakdown-efficiency-percent">(0%)</span>
+                        </div>
+                    </div>
+
+                    <div class="einsparung-komponente flex items-center justify-between p-4 bg-gray-50 rounded-lg">
+                        <div>
+                            <span class="label font-medium text-gray-900">Overhead-Einsparungen:</span>
+                            <p class="text-sm text-gray-600 mt-1">IT-Infrastruktur + Bürokosten</p>
+                        </div>
+                        <div class="text-right">
+                            <span class="betrag text-lg font-semibold text-coral-600" id="breakdown-overhead">€0</span>
+                            <span class="prozent text-sm text-gray-500 block" id="breakdown-overhead-percent">(0%)</span>
+                        </div>
+                    </div>
+
+                    <div class="einsparung-komponente flex items-center justify-between p-4 bg-gray-50 rounded-lg" id="breakdown-scale-section" style="display: none;">
+                        <div>
+                            <span class="label font-medium text-gray-900">Skaleneffekte:</span>
+                            <p class="text-sm text-gray-600 mt-1">Zusätzliche Synergien bei großen Verwaltungen (>1000 Einheiten)</p>
+                        </div>
+                        <div class="text-right">
+                            <span class="betrag text-lg font-semibold text-coral-600" id="breakdown-scale">€0</span>
+                            <span class="prozent text-sm text-gray-500 block" id="breakdown-scale-percent">(0%)</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mt-6 pt-6 border-t border-gray-200">
+                    <div class="flex items-center justify-between">
+                        <span class="text-lg font-semibold text-gray-900">Gesamteinsparung (monatlich):</span>
+                        <span class="text-2xl font-bold text-coral-600" id="breakdown-total">€0</span>
+                    </div>
+                </div>
+
+                <div class="warnung bg-yellow-50 border border-yellow-200 text-yellow-700 px-4 py-3 rounded-lg mt-6">
+                    ⚠️ Diese Berechnung basiert auf wissenschaftlichen Studien, individuelle Ergebnisse können abweichen.
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Sources Modal -->
+    <div id="sources-modal" class="fixed inset-0 bg-black bg-opacity-50 z-50 hidden flex items-center justify-center p-4">
+        <div class="bg-white rounded-xl max-w-xl w-full max-h-[80vh] overflow-y-auto">
+            <div class="p-6">
+                <div class="flex items-center justify-between mb-6">
+                    <h3 class="text-xl font-semibold text-gray-900">Datenquellen und Methodik</h3>
+                    <button id="close-sources-modal" class="text-gray-400 hover:text-gray-600 transition-colors">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <line x1="18" y1="6" x2="6" y2="18"></line>
+                            <line x1="6" y1="6" x2="18" y2="18"></line>
+                        </svg>
+                    </button>
+                </div>
+
+                <div class="space-y-4">
+                    <div>
+                        <h4 class="font-semibold text-gray-900 mb-2">CRES-Verwalterentgeltstudie 2022</h4>
+                        <p class="text-sm text-gray-600">
+                            Repräsentative Studie zur Arbeitsbelastung in deutschen Hausverwaltungen. 
+                            Durchschnittlich 9,11 Stunden pro Einheit pro Jahr für manuelle Tätigkeiten.
+                        </p>
+                    </div>
+                    
+                    <div>
+                        <h4 class="font-semibold text-gray-900 mb-2">VDIV-Branchendaten 2023</h4>
+                        <p class="text-sm text-gray-600">
+                            Branchenverband der Immobilienverwalter Deutschland e.V. - 
+                            Kostenkennzahlen und Effizienzstudien.
+                        </p>
+                    </div>
+
+                    <div>
+                        <h4 class="font-semibold text-gray-900 mb-2">Berechnungsmethodik</h4>
+                        <ul class="text-sm text-gray-600 space-y-1 list-disc list-inside">
+                            <li>Konservative Automatisierungsgrade: 25% - 50%</li>
+                            <li>Skaleneffekte nur bei >1000 Einheiten</li>
+                            <li>Implementierungskosten berücksichtigt</li>
+                            <li>Drei-Szenario-Ansatz für realistische Erwartungen</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Services Section -->
+    <section id="services" class="py-16 sm:py-20 scroll-element fade-in-up">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="relative overflow-hidden rounded-3xl ring-1 ring-gray-200 bg-gradient-to-br from-gray-50 to-white sm:px-10 lg:px-14 lg:py-14 pt-10 pr-6 pb-10 pl-6">
+                
+                <div class="text-center mb-12">
+                    <p class="text-[11px] sm:text-xs tracking-widest text-gray-500 font-light uppercase mb-3">(04) Serviceangebote</p>
+                    <h2 class="text-3xl sm:text-5xl font-light tracking-tighter text-gray-900 mb-4">Unsere Serviceangebote</h2>
+                    <p class="text-xl text-gray-600">Wählen Sie den Ansatz, der zu Ihren Automatisierungsbedürfnissen passt</p>
+                </div>
+
+                <div class="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+                    
+                    <!-- Beratungsdienstleistungen -->
+                    <article class="secondary-card relative overflow-hidden rounded-3xl bg-gradient-to-b from-white to-gray-50 p-6 shadow-sm ring-1 ring-gray-200 scroll-element fade-in-up stagger-1">
+                        <div class="flex items-center justify-between mb-4">
+                            <h3 class="text-lg font-semibold tracking-tight text-gray-900">Beratungsdienstleistungen</h3>
+                        </div>
+                        
+                        <div class="mb-6">
+                            <p class="text-sm text-gray-600">Strategische Beratung und Implementierungsplanung für Ihre KI-Automatisierungsreise.</p>
+                        </div>
+
+                        <ul class="space-y-3 mb-6">
+                            <li class="flex items-start gap-2 text-sm text-gray-700">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-coral-500 mt-0.5 flex-shrink-0">
+                                    <path d="M20 6 9 17l-5-5"></path>
+                                </svg>
+                                Strategische Automatisierungsplanung
+                            </li>
+                            <li class="flex items-start gap-2 text-sm text-gray-700">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-coral-500 mt-0.5 flex-shrink-0">
+                                    <path d="M20 6 9 17l-5-5"></path>
+                                </svg>
+                                Monatliche Strategie-Sitzungen
+                            </li>
+                            <li class="flex items-start gap-2 text-sm text-gray-700">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-coral-500 mt-0.5 flex-shrink-0">
+                                    <path d="M20 6 9 17l-5-5"></path>
+                                </svg>
+                                Implementierungsberatung
+                            </li>
+                            <li class="flex items-start gap-2 text-sm text-gray-700">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-coral-500 mt-0.5 flex-shrink-0">
+                                    <path d="M20 6 9 17l-5-5"></path>
+                                </svg>
+                                Prozessoptimierung
+                            </li>
+                            <li class="flex items-start gap-2 text-sm text-gray-700">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-coral-500 mt-0.5 flex-shrink-0">
+                                    <path d="M20 6 9 17l-5-5"></path>
+                                </svg>
+                                Team-Schulung inklusive
+                            </li>
+                            <li class="flex items-start gap-2 text-sm text-gray-700">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-coral-500 mt-0.5 flex-shrink-0">
+                                    <path d="M20 6 9 17l-5-5"></path>
+                                </svg>
+                                Flexible Vertragsbedingungen
+                            </li>
+                        </ul>
+
+                        <button class="w-full inline-flex gap-2 hover:bg-gray-50 transition-colors text-sm font-medium text-gray-900 bg-white border-gray-200 border rounded-full pt-2.5 pr-4 pb-2.5 pl-4 items-center justify-center">
+                            Mehr erfahren
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M5 12h14"></path>
+                                <path d="m12 5 7 7-7 7"></path>
+                            </svg>
+                        </button>
+                    </article>
+
+                    <!-- Done-For-You Services (Popular) - FEATURED -->
+                    <article class="featured-card group relative overflow-visible bg-gray-950 rounded-3xl pt-8 pr-6 pb-6 pl-6 shadow-2xl transform scale-105 z-10 scroll-element fade-in-up stagger-2 
+                                   ring-4 ring-gradient-to-r from-amber-400/50 via-coral-500/50 to-purple-600/50 
+                                   hover:scale-110 hover:shadow-3xl transition-all duration-500 ease-out
+                                   before:absolute before:inset-0 before:bg-gradient-to-br before:from-amber-500/10 before:via-coral-500/10 before:to-purple-600/10 before:rounded-3xl before:-z-10
+                                   after:absolute after:inset-0 after:bg-gradient-to-br after:from-amber-400/5 after:via-coral-500/5 after:to-purple-600/5 after:rounded-3xl after:blur-xl after:-z-20">
+                        
+                        <!-- Luxus Kundenliebling Badge - Integrated Design -->
+                        <div class="absolute -top-1 left-6 z-20 floating-badge">
+                            <div class="relative">
+                                <!-- Main Badge with Glassmorphism -->
+                                <div class="bg-gradient-to-r from-amber-400 via-orange-500 to-coral-600 text-white px-4 py-2.5 rounded-full shadow-2xl
+                                           backdrop-blur-sm bg-opacity-95 border border-white/20 font-bold text-sm tracking-wide
+                                           group-hover:shadow-amber-500/50 group-hover:scale-110 transition-all duration-300">
+                                    <div class="flex items-center gap-2.5">
+                                        <!-- Crown Icon -->
+                                        <svg class="w-5 h-5 animate-pulse" fill="currentColor" viewBox="0 0 24 24">
+                                            <path d="M5 4L7 14h10l2-10l-4.5 2.5L12 4l-2.5 2.5L5 4z"/>
+                                            <path d="M4 20h16v1a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1v-1z"/>
+                                        </svg>
+                                        <span class="font-black">Kundenliebling</span>
+                                        <!-- Sparkle Animation -->
+                                        <div class="relative">
+                                            <div class="absolute -top-1 -right-1 w-2 h-2 bg-yellow-300 rounded-full animate-ping opacity-75"></div>
+                                            <div class="absolute -top-1 -right-1 w-2 h-2 bg-yellow-200 rounded-full"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <!-- Floating Stats Badge -->
+                                <div class="absolute -bottom-8 left-1/2 transform -translate-x-1/2 whitespace-nowrap">
+                                    <div class="bg-white/90 backdrop-blur-sm text-gray-900 px-3 py-1 rounded-full shadow-lg text-xs font-semibold
+                                               group-hover:bg-amber-100/90 transition-all duration-300 border border-amber-200/50">
+                                        ⭐ 92% wählen dieses Paket
+                                    </div>
+                                </div>
+                                
+                                <!-- Subtle Glow Effects -->
+                                <div class="absolute inset-0 bg-gradient-to-r from-amber-400 to-coral-600 rounded-full blur-lg opacity-30 -z-10 
+                                           group-hover:opacity-50 group-hover:blur-xl transition-all duration-500"></div>
+                            </div>
+                        </div>
+                        
+                        <div class="flex items-center justify-between mb-4 pt-2">
+                            <h3 class="text-lg font-semibold text-gray-50 tracking-tight">Done-For-You Services</h3>
+                            <span class="inline-flex items-center gap-1 rounded-full bg-coral-100 px-2 py-0.5 text-[10px] font-medium text-coral-700">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M11.017 2.814a1 1 0 0 1 1.966 0l1.051 5.558a2 2 0 0 0 1.594 1.594l5.558 1.051a1 1 0 0 1 0 1.966l-5.558 1.051a2 2 0 0 0-1.594 1.594l-1.051 5.558a1 1 0 0 1-1.966 0l-1.051-5.558a2 2 0 0 0-1.594-1.594l-5.558-1.051a1 1 0 0 1 0-1.966l5.558-1.051a2 2 0 0 0 1.594-1.594z"></path>
+                                </svg>
+                                POPULAR
+                            </span>
+                        </div>
+
+                        <div class="mb-6">
+                            <p class="text-sm text-gray-300">Komplette KI-Automatisierungslösungen, die einsatzbereit für Ihre Geschäftsabläufe geliefert werden.</p>
+                        </div>
+
+                        <ul class="space-y-3 mb-6">
+                            <li class="flex gap-2 text-sm text-gray-300 items-start">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-coral-500 mt-0.5 flex-shrink-0">
+                                    <path d="M20 6 9 17l-5-5"></path>
+                                </svg>
+                                Komplette Automatisierungs-Builds
+                            </li>
+                            <li class="flex gap-2 text-sm text-gray-300 items-start">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-coral-500 mt-0.5 flex-shrink-0">
+                                    <path d="M20 6 9 17l-5-5"></path>
+                                </svg>
+                                Kundenspezifische KI-Agentenentwicklung
+                            </li>
+                            <li class="flex gap-2 text-sm text-gray-300 items-start">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-coral-500 mt-0.5 flex-shrink-0">
+                                    <path d="M20 6 9 17l-5-5"></path>
+                                </svg>
+                                Systemintegrationen inklusive
+                            </li>
+                            <li class="flex gap-2 text-sm text-gray-300 items-start">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-coral-500 mt-0.5 flex-shrink-0">
+                                    <path d="M20 6 9 17l-5-5"></path>
+                                </svg>
+                                Dediziertes Projektmanagement
+                            </li>
+                            <li class="flex gap-2 text-sm text-gray-300 items-start">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-coral-500 mt-0.5 flex-shrink-0">
+                                    <path d="M20 6 9 17l-5-5"></path>
+                                </svg>
+                                Unbegrenzte Revisionen
+                            </li>
+                            <li class="flex gap-2 text-sm text-gray-300 items-start">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-coral-500 mt-0.5 flex-shrink-0">
+                                    <path d="M20 6 9 17l-5-5"></path>
+                                </svg>
+                                Laufender Support inklusive
+                            </li>
+                        </ul>
+
+                        <button class="w-full inline-flex gap-2 hover:bg-gray-50 transition-colors text-sm font-medium text-gray-900 bg-white border-gray-200 border rounded-full pt-2.5 pr-4 pb-2.5 pl-4 items-center justify-center">
+                            Mehr erfahren
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M5 12h14"></path>
+                                <path d="m12 5 7 7-7 7"></path>
+                            </svg>
+                        </button>
+                        </article>
+                    </div>
+
+                    <!-- Enterprise-Pakete -->
+                    <article class="secondary-card relative overflow-hidden rounded-3xl bg-gradient-to-b from-white to-gray-50 p-6 shadow-sm ring-1 ring-gray-200 scroll-element fade-in-up stagger-3">
+                        <div class="flex items-center justify-between mb-4">
+                            <h3 class="text-lg font-semibold tracking-tight text-gray-900">Enterprise-Pakete</h3>
+                            <span class="inline-flex items-center rounded-full bg-gray-700 px-2 py-0.5 text-[10px] font-medium text-white">Premium</span>
+                        </div>
+
+                        <div class="mb-6">
+                            <p class="text-sm text-gray-600">Umfassende Lösungen für große Organisationen mit komplexen Automatisierungsanforderungen.</p>
+                        </div>
+
+                        <ul class="space-y-3 mb-6">
+                            <li class="flex items-start gap-2 text-sm text-gray-700">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-coral-500 mt-0.5 flex-shrink-0">
+                                    <path d="M20 6 9 17l-5-5"></path>
+                                </svg>
+                                Kundenspezifische Automatisierungsarchitektur
+                            </li>
+                            <li class="flex items-start gap-2 text-sm text-gray-700">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-coral-500 mt-0.5 flex-shrink-0">
+                                    <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path>
+                                    <rect width="4" height="12" x="2" y="9"></rect>
+                                    <circle cx="4" cy="4" r="2"></circle>
+                                </svg>
+                                Dediziertes Entwicklungsteam
+                            </li>
+                            <li class="flex items-start gap-2 text-sm text-gray-700">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-coral-500 mt-0.5 flex-shrink-0">
+                                    <path d="M20 6 9 17l-5-5"></path>
+                                </svg>
+                                Priorisierter Support & SLA
+                            </li>
+                            <li class="flex items-start gap-2 text-sm text-gray-700">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-coral-500 mt-0.5 flex-shrink-0">
+                                    <path d="M20 6 9 17l-5-5"></path>
+                                </svg>
+                                Enterprise-Integrationen
+                            </li>
+                            <li class="flex items-start gap-2 text-sm text-gray-700">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-coral-500 mt-0.5 flex-shrink-0">
+                                    <path d="M20 6 9 17l-5-5"></path>
+                                </svg>
+                                Erweiterte Sicherheit & Compliance
+                            </li>
+                            <li class="flex items-start gap-2 text-sm text-gray-700">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-coral-500 mt-0.5 flex-shrink-0">
+                                    <path d="M20 6 9 17l-5-5"></path>
+                                </svg>
+                                Quartalsmäßige Geschäftsüberprüfungen
+                            </li>
+                        </ul>
+
+                        <button class="w-full inline-flex items-center justify-center gap-2 rounded-full border border-gray-200 bg-white px-4 py-2.5 text-sm font-medium text-gray-900 hover:bg-gray-50 transition-colors">
+                            Mehr erfahren
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M5 12h14"></path>
+                                <path d="m12 5 7 7-7 7"></path>
+                            </svg>
+                        </button>
+                    </article>
+
+                </div>
+                
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="sm:py-20 pt-16 pb-16 scroll-element fade-in-up">
+        <div class="max-w-7xl sm:px-6 lg:px-8 mr-auto ml-auto pr-4 pl-4">
+            <div class="bg-gradient-to-br from-gray-50 to-white ring-1 ring-gray-200 rounded-3xl sm:px-10 lg:px-14 lg:py-14 pt-10 pr-6 pb-10 pl-6 text-center">
+                <h3 class="text-3xl sm:text-5xl font-light tracking-tighter text-gray-900 mb-4">Bereit für Intelligente Automatisierung?</h3>
+                <p class="text-xl text-gray-600 mb-8">Lassen Sie uns gemeinsam Ihre Hausverwaltung revolutionieren und messbare Effizienzsteigerungen erreichen.</p>
+                
+                <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
+                    <button class="inline-flex items-center gap-2 bg-coral-500 hover:bg-coral-600 text-white rounded-full px-6 py-3 text-sm font-medium transition-colors focus-visible">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-4 h-4">
+                            <path d="M4 14a1 1 0 0 1-.78-1.63l9.9-10.2a.5.5 0 0 1 .86.46l-1.92 6.02A1 1 0 0 0 13 10h7a1 1 0 0 1 .78 1.63l-9.9 10.2a.5.5 0 0 1-.86-.46l1.92-6.02A1 1 0 0 0 11 14z"></path>
+                        </svg>
+                        Projekt Starten
+                    </button>
+                    <button class="inline-flex items-center gap-2 ring-1 ring-gray-300 text-gray-700 hover:bg-gray-50 rounded-full px-6 py-3 text-sm font-medium transition-colors focus-visible">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-4 h-4">
+                            <path d="M8 2v4"></path>
+                            <path d="M16 2v4"></path>
+                            <rect width="18" height="18" x="3" y="4" rx="2"></rect>
+                            <path d="M3 10h18"></path>
+                        </svg>
+                        Beratungstermin Buchen
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gradient-to-br from-gray-50 to-white ring-t ring-gray-200 pt-12 pb-12 scroll-element fade-in-up no-print">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
+                <div class="col-span-1 md:col-span-2">
+                    <div class="flex items-center gap-2 mb-4">
+                        <span class="text-xl font-semibold tracking-tight text-gray-900">AI Hausverwaltung</span>
+                        <span class="inline-flex h-5 w-5 items-center justify-center rounded-full bg-coral-50">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-3.5 h-3.5 text-coral-500">
+                                <path d="M4 14a1 1 0 0 1-.78-1.63l9.9-10.2a.5.5 0 0 1 .86.46l-1.92 6.02A1 1 0 0 0 13 10h7a1 1 0 0 1 .78 1.63l-9.9 10.2a.5.5 0 0 1-.86-.46l1.92-6.02A1 1 0 0 0 11 14z"></path>
+                            </svg>
+                        </span>
+                    </div>
+                    <p class="text-gray-600 mb-4">Intelligente Automatisierung für Hausverwaltungen durch modernste KI-Technologie und strategische Prozessoptimierung.</p>
+                    <div class="flex items-center gap-4">
+                        <a href="#" class="text-gray-400 hover:text-coral-500 transition-colors">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-5 h-5">
+                                <path d="M22 4s-.7 2.1-2 3.4c1.6 10-9.4 17.3-18 11.6 2.2.1 4.4-1.1 6.4-1.6 3.4-4.6 1.6-1.6-1.1-2.9-2.5-1.1z"></path>
+                            </svg>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-coral-500 transition-colors">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-5 h-5">
+                                <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path>
+                                <rect width="4" height="12" x="2" y="9"></rect>
+                                <circle cx="4" cy="4" r="2"></circle>
+                            </svg>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-coral-500 transition-colors">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-5 h-5">
+                                <rect width="20" height="16" x="2" y="4" rx="2"></rect>
+                                <path d="m22 7-10 5L2 7"></path>
+                            </svg>
+                        </a>
+                    </div>
+                </div>
+                
+                <div>
+                    <h4 class="text-sm font-semibold text-gray-900 mb-4">Services</h4>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="text-sm text-gray-600 hover:text-coral-500 transition-colors">Mieterkorrespondenz KI</a></li>
+                        <li><a href="#" class="text-sm text-gray-600 hover:text-coral-500 transition-colors">Nebenkostenabrechnung</a></li>
+                        <li><a href="#" class="text-sm text-gray-600 hover:text-coral-500 transition-colors">Dokumenten-Management</a></li>
+                        <li><a href="#" class="text-sm text-gray-600 hover:text-coral-500 transition-colors">Wartungsplanung</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h4 class="text-sm font-semibold text-gray-900 mb-4">Kontakt</h4>
+                    <ul class="space-y-2">
+                        <li><a href="mailto:hallo@ai-hausverwaltung.com" class="text-sm text-gray-600 hover:text-coral-500 transition-colors">hallo@ai-hausverwaltung.com</a></li>
+                        <li><a href="tel:+49-xxx-xxx-xxxx" class="text-sm text-gray-600 hover:text-coral-500 transition-colors">+49 (xxx) xxx-xxxx</a></li>
+                        <li><span class="text-sm text-gray-600">Deutschland</span></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="pt-8 border-t border-gray-200 flex flex-col sm:flex-row justify-between items-center">
+                <p class="text-sm text-gray-500">© 2024 AI Hausverwaltung. Alle Rechte vorbehalten.</p>
+                <div class="flex items-center gap-6 mt-4 sm:mt-0">
+                    <a href="#" class="text-sm text-gray-500 hover:text-coral-500 transition-colors">Datenschutz</a>
+                    <a href="#" class="text-sm text-gray-500 hover:text-coral-500 transition-colors">Impressum</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript for functionality -->
+    <script>
+        // ===== SCROLL ANIMATIONS =====
+        document.addEventListener('DOMContentLoaded', function() {
+            // Scroll animation observer
+            const observerOptions = {
+                threshold: 0.1,
+                rootMargin: '0px 0px -100px 0px'
+            };
+
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('animate-in');
+                    }
+                });
+            }, observerOptions);
+
+            // Observe all scroll elements
+            document.querySelectorAll('.scroll-element').forEach(el => {
+                observer.observe(el);
+            });
+
+            // ===== SMOOTH SCROLLING =====
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    const target = document.querySelector(this.getAttribute('href'));
+                    if (target) {
+                        const headerOffset = 80;
+                        const elementPosition = target.getBoundingClientRect().top;
+                        const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+
+                        window.scrollTo({
+                            top: offsetPosition,
+                            behavior: 'smooth'
+                        });
+                    }
+                });
+            });
+
+            // ROI Calculator is now handled by the external main.js file
+
+            // ===== TOOLTIP FUNCTIONALITY =====
+            // Show tooltips on hover for automation levels
+            document.querySelectorAll('.step-indicator').forEach(indicator => {
+                const tooltip = indicator.querySelector('.automation-tooltip');
+                if (tooltip) {
+                    indicator.addEventListener('mouseenter', () => {
+                        tooltip.classList.remove('opacity-0', 'pointer-events-none');
+                        tooltip.classList.add('opacity-100');
+                    });
+                    
+                    indicator.addEventListener('mouseleave', () => {
+                        tooltip.classList.remove('opacity-100');
+                        tooltip.classList.add('opacity-0', 'pointer-events-none');
+                    });
+                }
+            });
+
+            // Show tooltip for manual hours input
+            const manualHoursTooltip = document.querySelector('.tooltip-container');
+            if (manualHoursTooltip) {
+                const tooltip = manualHoursTooltip.querySelector('.tooltip');
+                if (tooltip) {
+                    manualHoursTooltip.addEventListener('mouseenter', () => {
+                        tooltip.classList.remove('opacity-0', 'pointer-events-none');
+                        tooltip.classList.add('opacity-100');
+                    });
+                    
+                    manualHoursTooltip.addEventListener('mouseleave', () => {
+                        tooltip.classList.remove('opacity-100');
+                        tooltip.classList.add('opacity-0', 'pointer-events-none');
+                    });
+                }
+            }
+
+            // ===== MOBILE MENU =====
+            const mobileMenuToggle = document.getElementById('mobile-menu-toggle');
+            if (mobileMenuToggle) {
+                mobileMenuToggle.addEventListener('click', function() {
+                    console.log('Mobile menu clicked');
+                    // Mobile menu implementation would go here
+                });
+            }
+
+            // ===== LUCIDE ICONS =====
+            if (typeof lucide !== 'undefined') {
+                lucide.createIcons();
+            }
+
+            console.log('AI Hausverwaltung website initialized successfully');
+        });
+
+        // ===== PERFORMANCE MONITORING =====
+        window.addEventListener('load', function() {
+            // Log performance metrics
+            const navigation = performance.getEntriesByType('navigation')[0];
+            if (navigation) {
+                console.log('Page Load Time:', navigation.loadEventEnd - navigation.loadEventStart, 'ms');
+            }
+        });
+    </script>
+</body>
+</html>
